@@ -1,0 +1,29 @@
+name: "Cloudways Varnish Service Manager"
+description: "Manage Varnish service state (enable/disable/purge) on Cloudways servers"
+author: "Christina Gleason <hello@fkwdigital.com>"
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: "zap"
+  color: "blue"
+
+inputs:
+  CLOUDWAYS_EMAIL:
+    description: "Cloudways account email"
+    required: true
+  CLOUDWAYS_API_KEY:
+    description: "Cloudways API key"
+    required: true
+  CLOUDWAYS_SERVER_ID:
+    description: "Cloudways server ID"
+    required: true
+  ACTION:
+    description: "Action to perform: enable, disable, or purge"
+    required: true
+    default: "purge"
+  WAIT_FOR_COMPLETION:
+    description: "Wait for the operation to complete"
+    required: false
+    default: "true"

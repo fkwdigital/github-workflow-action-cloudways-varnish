@@ -1,0 +1,35 @@
+{
+  "name": "github-workflow-action-cloudways-varnish",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GitHub Action to manage Varnish service on Cloudways servers",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fkwdigital/github-workflow-action-cloudways-varnish.git"
+  },
+  "license": "MIT",
+  "author": "Chris Gleason <chris@fkwdigital.com>",
+  "keywords": [
+    "github-action",
+    "cloudways",
+    "varnish",
+    "cache",
+    "deployment"
+  ],
+  "dependencies": {
+    "command-exists": "1.2.9",
+    "node-cmd": "4.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.4",
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.3"
+  },
+  "scripts": {
+    "build": "npm run lint && ncc build ./src/index.js -o dist -m",
+    "lint": "eslint ./src/index.js",
+    "lint:fix": "eslint ./src/index.js --fix"
+  }
+}
