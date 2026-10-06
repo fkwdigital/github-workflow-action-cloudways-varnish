@@ -1,3 +1,5 @@
+const { DEFAULT_API_URL } = require('./client');
+
 const VALID_ACTIONS = ['enable', 'disable', 'purge'];
 
 /**
@@ -23,7 +25,7 @@ function fromEnv(key, fallback = '') {
  * - apiKey: The API key of the Cloudways account (legacy, deprecated by Cloudways)
  * - serverId: The server ID of the Cloudways server
  * - action: The action to perform on the Cloudways server (enable, disable, purge)
- * - waitForCompletion: Whether to wait for the completion of the action (true, false)
+ * - apiUrl: The Cloudways API base URL
  * @returns {Object} The configuration object
  */
 function getInputs() {
@@ -32,7 +34,8 @@ function getInputs() {
     email: fromEnv('CLOUDWAYS_EMAIL'),
     apiKey: fromEnv('CLOUDWAYS_API_KEY'),
     serverId: fromEnv('CLOUDWAYS_SERVER_ID'),
-    action: fromEnv('ACTION', 'enable').toLowerCase()
+    action: fromEnv('ACTION', 'enable').toLowerCase(),
+    apiUrl: fromEnv('CLOUDWAYS_API_URL', DEFAULT_API_URL)
   };
 }
 

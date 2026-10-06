@@ -52,6 +52,7 @@ A GitHub Action to manage Varnish cache service on Cloudways servers - enable, d
 | `CLOUDWAYS_API_KEY`   | (Deprecated) Cloudways legacy API key                            | No       | -       |
 | `CLOUDWAYS_SERVER_ID` | The Cloudways server ID                                          | Yes      | -       |
 | `ACTION`              | Action to perform: `enable`, `disable`, or `purge`               | Yes      | `purge` |
+| `CLOUDWAYS_API_URL`   | Cloudways API base URL                                           | No       | `https://api.cloudways.com/api/v1` |
 
 \* Provide `CLOUDWAYS_API_TOKEN`, or both `CLOUDWAYS_EMAIL` and `CLOUDWAYS_API_KEY`. If the token is set, it is used
 and the email and key are ignored.

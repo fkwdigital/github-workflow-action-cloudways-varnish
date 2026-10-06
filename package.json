@@ -1,6 +1,6 @@
 {
   "name": "github-workflow-action-cloudways-varnish",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "GitHub Action to manage Varnish service on Cloudways servers",
   "main": "dist/index.js",
@@ -20,10 +20,6 @@
     "cache",
     "deployment"
   ],
-  "dependencies": {
-    "command-exists": "1.2.9",
-    "node-cmd": "4.0.0"
-  },
   "devDependencies": {
     "@vercel/ncc": "^0.38.4",
     "eslint": "^7.27.0",
@@ -32,7 +28,7 @@
   },
   "scripts": {
     "build": "npm run lint && ncc build ./src/index.js -o dist -m",
-    "lint": "eslint ./src/index.js",
-    "lint:fix": "eslint ./src/index.js --fix"
+    "lint": "eslint ./src/",
+    "lint:fix": "eslint ./src/ --fix"
   }
 }

@@ -26,3 +26,6 @@ inputs:
     description: "Action to perform: enable, disable, or purge"
     required: true
     default: "purge"
+  CLOUDWAYS_API_URL:
+    description: "Cloudways API base URL"
+    default: "https://api.cloudways.com/api/v1"
