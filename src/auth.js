@@ -8,7 +8,7 @@ const { request } = require('./client');
  * @param {string} opts.email    - Cloudways account email
  * @param {string} opts.apiKey   - legacy Cloudways API key
  * @param {string} [opts.apiUrl] - API base URL
- * @return {Promise<string>} The OAuth access token.
+ * @returns {Promise<string>} The OAuth access token.
  */
 async function getAccessToken({ email, apiKey, apiUrl }) {
   console.log('[API] Obtaining OAuth access token...');
@@ -34,7 +34,7 @@ async function getAccessToken({ email, apiKey, apiUrl }) {
  *
  * @since 1.1.0
  * @param {object} cfg - action configuration from getInputs()
- * @return {Promise<string>} The bearer token.
+ * @returns {Promise<string>} The bearer token.
  */
 async function resolveToken(cfg) {
   if (cfg.apiToken) {

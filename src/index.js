@@ -6,7 +6,7 @@ const { executeVarnishAction } = require('./varnish');
  * Resolve credentials and run the requested Varnish action.
  *
  * @since 1.0.0
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 async function main() {
   const cfg = getInputs();

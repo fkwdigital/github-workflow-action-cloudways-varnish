@@ -8,7 +8,7 @@ const DEFAULT_INTERVAL_MS = 5000;
  *
  * @since 1.0.0
  * @param {number} ms - milliseconds to wait
- * @return {Promise<void>}
+ * @returns {Promise<void>}
  */
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -24,7 +24,7 @@ function sleep(ms) {
  * @param {string} opts.token          - bearer token
  * @param {string|number} opts.id      - operation id
  * @param {string} [opts.apiUrl]       - API base URL
- * @return {Promise<object>} The API response containing `operation`.
+ * @returns {Promise<object>} The API response containing `operation`.
  */
 function checkOperationStatus({ token, id, apiUrl }) {
   return request({ apiUrl, token, method: 'GET', path: `/operation/${id}` });
@@ -40,7 +40,7 @@ function checkOperationStatus({ token, id, apiUrl }) {
  * @param {string} [opts.apiUrl]       - API base URL
  * @param {number} [opts.maxAttempts]  - max number of polls
  * @param {number} [opts.intervalMs]   - delay between polls
- * @return {Promise<object>} The completed operation object.
+ * @returns {Promise<object>} The completed operation object.
  */
 async function waitForCompletion({
   token,

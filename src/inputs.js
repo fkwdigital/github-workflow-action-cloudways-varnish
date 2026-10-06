@@ -3,13 +3,13 @@ const { DEFAULT_API_URL } = require('./client');
 const VALID_ACTIONS = ['enable', 'disable', 'purge'];
 
 /**
- * Retrieves an environment variable value by key.
- * If the key is not found in `process.env`,
- *   it will also check for an environment variable with the prefix `INPUT_`.
- * If the value is not found, it will return the provided fallback.
- * @param {string} key - The key of the environment variable
- * @param {string} [fallback=''] - The fallback value if the key is not found
- * @returns {string} The value of the environment variable
+ * Read an input value from the environment.
+ * Looks for the bare key first, then `INPUT_<key>` (the convention GitHub Actions uses).
+ *
+ * @since 1.0.0
+ * @param {string} key        - environment variable name
+ * @param {string} [fallback] - value to return if the key is unset or empty
+ * @returns {string}
  */
 function fromEnv(key, fallback = '') {
   const has = Object.prototype.hasOwnProperty.call(process.env, key);
@@ -18,15 +18,10 @@ function fromEnv(key, fallback = '') {
 }
 
 /**
- * Retrieves the configuration object based on the environment variables.
- * The configuration object contains the following properties:
- * - apiToken: The Cloudways API access token (preferred)
- * - email: The email address of the Cloudways account (legacy, with apiKey)
- * - apiKey: The API key of the Cloudways account (legacy, deprecated by Cloudways)
- * - serverId: The server ID of the Cloudways server
- * - action: The action to perform on the Cloudways server (enable, disable, purge)
- * - apiUrl: The Cloudways API base URL
- * @returns {Object} The configuration object
+ * Build the configuration object from action inputs.
+ *
+ * @since 1.0.0
+ * @returns {object}
  */
 function getInputs() {
   return {
@@ -40,12 +35,11 @@ function getInputs() {
 }
 
 /**
- * Asserts that the required inputs are present and valid.
- * Either CLOUDWAYS_API_TOKEN, or both CLOUDWAYS_EMAIL and CLOUDWAYS_API_KEY, must be provided.
- * If any of the required inputs are missing, it will throw an Error.
- * If the ACTION is not one of the valid actions, it will also throw an Error.
- * @param {Object} cfg - The configuration object
- * @throws {Error} If any of the required inputs are missing or invalid
+ * Validate inputs. Needs CLOUDWAYS_API_TOKEN, or CLOUDWAYS_EMAIL + CLOUDWAYS_API_KEY, and a valid ACTION.
+ *
+ * @since 1.0.0
+ * @param {object} cfg - configuration object from getInputs()
+ * @returns {void}
  */
 function assertRequired(cfg) {
   const missing = [];

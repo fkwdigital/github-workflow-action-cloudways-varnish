@@ -15,7 +15,7 @@ const STATUS_HINTS = {
  * @param {string} opts.method   - HTTP method
  * @param {string} opts.path     - endpoint path, starting with /
  * @param {object} [opts.body]   - JSON body
- * @return {Promise<object>} The parsed JSON response.
+ * @returns {Promise<object>} The parsed JSON response.
  */
 async function request({ apiUrl = DEFAULT_API_URL, token = '', method, path, body }) {
   const headers = { Accept: 'application/json' };

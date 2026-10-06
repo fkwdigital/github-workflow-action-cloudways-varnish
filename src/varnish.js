@@ -9,7 +9,7 @@ const { request } = require('./client');
  * @param {string|number} opts.serverId - Cloudways server id
  * @param {string} opts.action         - enable, disable or purge
  * @param {string} [opts.apiUrl]       - API base URL
- * @return {Promise<object>} Object with `completed: true` on success.
+ * @returns {Promise<object>} Object with `completed: true` on success.
  */
 async function executeVarnishAction({ token, serverId, action, apiUrl }) {
   console.log(`[API] Executing Varnish ${action} on server ${serverId}...`);
