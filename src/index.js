@@ -1,5 +1,5 @@
 const { getInputs, assertRequired } = require('./inputs');
-const { getAccessToken, executeVarnishAction } = require('./api');
+const { resolveToken, executeVarnishAction } = require('./api');
 
 /**
  * Main entry point for the GitHub Actions workflow.
@@ -22,8 +22,8 @@ async function main() {
     console.log(`[Varnish] Action: ${cfg.action}`);
     console.log(`[Varnish] Server ID: ${cfg.serverId}`);
 
-    // obtain access token
-    const token = await getAccessToken(cfg.email, cfg.apiKey);
+    // use access token, or exchange legacy email + api key for one
+    const token = await resolveToken(cfg);
 
     // execute varnish service action
     const operation = await executeVarnishAction(token, cfg.serverId, cfg.action);

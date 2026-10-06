@@ -1,8 +1,8 @@
 name: "Cloudways Varnish Service Manager"
 description: "Manage Varnish service state (enable/disable/purge) on Cloudways servers"
-author: "Christina Gleason <hello@fkwdigital.com>"
+author: "FKW Digital <hello@fkwdigital.com>"
 runs:
-  using: "node20"
+  using: "node24"
   main: "dist/index.js"
 
 branding:
@@ -10,12 +10,15 @@ branding:
   color: "blue"
 
 inputs:
+  CLOUDWAYS_API_TOKEN:
+    description: "Cloudways API access token (recommended). Replaces CLOUDWAYS_EMAIL + CLOUDWAYS_API_KEY."
+    required: false
   CLOUDWAYS_EMAIL:
-    description: "Cloudways account email"
-    required: true
+    description: "(Deprecated) Cloudways account email, used with CLOUDWAYS_API_KEY when no access token is set"
+    required: false
   CLOUDWAYS_API_KEY:
-    description: "Cloudways API key"
-    required: true
+    description: "(Deprecated) Cloudways legacy API key. Stops working on October 15, 2026."
+    required: false
   CLOUDWAYS_SERVER_ID:
     description: "Cloudways server ID"
     required: true

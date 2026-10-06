@@ -18,8 +18,9 @@ function fromEnv(key, fallback = '') {
 /**
  * Retrieves the configuration object based on the environment variables.
  * The configuration object contains the following properties:
- * - email: The email address of the Cloudways account
- * - apiKey: The API key of the Cloudways account
+ * - apiToken: The Cloudways API access token (preferred)
+ * - email: The email address of the Cloudways account (legacy, with apiKey)
+ * - apiKey: The API key of the Cloudways account (legacy, deprecated by Cloudways)
  * - serverId: The server ID of the Cloudways server
  * - action: The action to perform on the Cloudways server (enable, disable, purge)
  * - waitForCompletion: Whether to wait for the completion of the action (true, false)
@@ -27,6 +28,7 @@ function fromEnv(key, fallback = '') {
  */
 function getInputs() {
   return {
+    apiToken: fromEnv('CLOUDWAYS_API_TOKEN'),
     email: fromEnv('CLOUDWAYS_EMAIL'),
     apiKey: fromEnv('CLOUDWAYS_API_KEY'),
     serverId: fromEnv('CLOUDWAYS_SERVER_ID'),
@@ -36,6 +38,7 @@ function getInputs() {
 
 /**
  * Asserts that the required inputs are present and valid.
+ * Either CLOUDWAYS_API_TOKEN, or both CLOUDWAYS_EMAIL and CLOUDWAYS_API_KEY, must be provided.
  * If any of the required inputs are missing, it will throw an Error.
  * If the ACTION is not one of the valid actions, it will also throw an Error.
  * @param {Object} cfg - The configuration object
@@ -43,8 +46,11 @@ function getInputs() {
  */
 function assertRequired(cfg) {
   const missing = [];
-  if (!cfg.email) missing.push('CLOUDWAYS_EMAIL');
-  if (!cfg.apiKey) missing.push('CLOUDWAYS_API_KEY');
+  if (!cfg.apiToken) {
+    if (!cfg.email && !cfg.apiKey) missing.push('CLOUDWAYS_API_TOKEN');
+    else if (!cfg.email) missing.push('CLOUDWAYS_EMAIL');
+    else if (!cfg.apiKey) missing.push('CLOUDWAYS_API_KEY');
+  }
   if (!cfg.serverId) missing.push('CLOUDWAYS_SERVER_ID');
 
   if (missing.length) {

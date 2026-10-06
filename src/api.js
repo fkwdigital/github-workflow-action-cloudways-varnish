@@ -27,6 +27,27 @@ async function getAccessToken(email, apiKey) {
 }
 
 /**
+ * Resolves the bearer token for API requests. Uses the access token when provided,
+ * otherwise falls back to the legacy email + API key OAuth exchange.
+ *
+ * @since 1.1.0
+ * @param {object} cfg The action configuration from getInputs().
+ * @return {Promise<string>} A promise that resolves with the bearer token.
+ */
+async function resolveToken(cfg) {
+  if (cfg.apiToken) {
+    console.log('[API] Using Cloudways API access token');
+    return cfg.apiToken;
+  }
+
+  console.warn(
+    '⚠️ [API] CLOUDWAYS_EMAIL + CLOUDWAYS_API_KEY is deprecated and stops working on October 15, 2026. '
+      + 'Switch to CLOUDWAYS_API_TOKEN.'
+  );
+  return getAccessToken(cfg.email, cfg.apiKey);
+}
+
+/**
  * Executes a Varnish action (such as 'flush_all' or 'list_backends') on a
  * specified Cloudways server.
  *
@@ -57,6 +78,13 @@ async function executeVarnishAction(token, serverId, action) {
     },
     body: JSON.stringify(payload)
   });
+
+  if (response.status === 401 || response.status === 403) {
+    const hint = response.status === 401
+      ? 'token is invalid, expired or revoked'
+      : 'token lacks the required permission';
+    throw new Error(`HTTP ${response.status} (${hint}): ${await response.text()}`);
+  }
 
   const data = await response.json();
 
@@ -180,6 +208,7 @@ async function waitForCompletion(token, operationId, maxAttempts, interval) {
 
 module.exports = {
   getAccessToken,
+  resolveToken,
   executeVarnishAction,
   checkOperationStatus,
   waitForCompletion
